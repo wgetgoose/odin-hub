@@ -1,0 +1,5 @@
+use a reduce function to iterate through the array and find the ages
+
+
+call on a different function to get the number values of the ages, so that a birthdate without a death date 
+will be easier to implement

@@ -1,0 +1,9 @@
+what I learned:
+
+no need to change into an Array. JavaScript has reverse, split, etc. that
+can be used to check string equality
+
+also, .functions() can be placed on new lines, like so
+string 
+    .toLowerCase()
+    .replace()...
