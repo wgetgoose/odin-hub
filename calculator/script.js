@@ -1,15 +1,8 @@
-/*
-    ***** TO-DOs *****
-    1. Check whether 'operated' is necessary
-*/
-
-
 // When I say 'chain calculation' I mean when the user enters
 // multiple operators in a row, i.e: 10 - 2 + 3
 
 let array = [] // store numbers
 let operator;
-let operated = false; // boolean used in event listener for numbers input
 
 const screen = document.getElementById("screen");
 const currentInput = document.getElementById("current-input")
@@ -44,7 +37,6 @@ const calculate = () => {
         case (array[0] != undefined) && (array[1] == undefined):
             return array[0];
     };
-    operated = true;
     array[0] = Number(array[0])
     array[1] = Number(array[1])
     switch(operator) {
@@ -67,7 +59,7 @@ numbers.forEach(element => {
     element.addEventListener("click", e => {
         // Multi-digit number entry 
         switch(true) {
-            case (operated == true) && (operator == undefined):
+            case (screen.textContent ==  Number) && (operator == undefined):
                 screen.textContent = screen.textContent + (e.target.id);
                 array[0] = (array[0] + (e.target.id)); 
                 break;
@@ -106,7 +98,6 @@ const clear = document.getElementById('clear');
 clear.addEventListener("click", () => {
     array = [];
     operator = undefined;
-    operated = false;
     screen.textContent = 'Cleared!';
     refreshScreen();
 });
