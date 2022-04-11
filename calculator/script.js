@@ -1,12 +1,10 @@
 /*
     ***** TO-DOs ******
-    1. Fix adding numbers into array[1] post-execute
-    2. Text Content to show current inputs by user
 */
 
 let array = [] // store numbers
 let operator;
-let operated = false;
+let operated = false; // boolean used in event listener for numbers input
 
 const screen = document.getElementById("screen");
 const currentInput = document.getElementById("current-input")
@@ -18,19 +16,19 @@ numbers.forEach(element => {
         switch(true) {
             case (operated == true) && (operator == undefined):
                 screen.textContent = screen.textContent + (e.target.id);
-                array[0] = Number(array[0].toString() + (e.target.id)); // this is awful
+                array[0] = (array[0] + (e.target.id)); 
                 break;
             case ( (operator == undefined) && (array[0] == undefined)): 
-                array[0] = Number(e.target.id);
+                array[0] = (e.target.id);
                 break;
             case ((operator == undefined) && (array[0] != undefined)): 
-                array[0] = Number(array[0].toString() + (e.target.id)); // this is awful
+                array[0] = (array[0] + (e.target.id)); 
                 break;
             case (array[1] == undefined): 
-                array[1] = Number(e.target.id);
+                array[1] = (e.target.id);
                 break;
             case (array[1] != undefined): 
-                array[1] = Number(array[1].toString() + (e.target.id)); // this is awful
+                array[1] = (array[1] + (e.target.id));
                 break;
         }
         refreshScreen();
@@ -70,6 +68,10 @@ function reset() {
 
 function refreshScreen() {
     string = `${array[0]} ${operator} ${array[1]}`
+    string = string.replace('add', '+');
+    string = string.replace('subtract', '-');
+    string = string.replace('multiply', '*');
+    string = string.replace('divide', '/');
     currentInput.textContent = string.replace(/undefined/g, '')
 }
 
@@ -82,6 +84,8 @@ const calculate = () => {
     }
     return array.reduce( (previous, current) => {
         operated = true;
+        previous = Number(previous)
+        current = Number(current)
         switch (operator) {
             case 'add':
                 return previous + current;
