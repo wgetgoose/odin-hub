@@ -5,7 +5,8 @@
 */
 
 let array = [] // store numbers
-let operator; 
+let operator;
+let operated = false;
 
 const screen = document.getElementById("screen");
 const currentInput = document.getElementById("current-input")
@@ -15,6 +16,10 @@ const numbers = Array.from(document.getElementsByClassName("num"));
 numbers.forEach(element => {
     element.addEventListener("click", e => {
         switch(true) {
+            case (operated == true) && (operator == undefined):
+                screen.textContent = screen.textContent + (e.target.id);
+                array[0] = Number(array[0].toString() + (e.target.id));
+                break;
             case ( (operator == undefined) && (array[0] == undefined)): 
                 array[0] = Number(e.target.id);
                 break;
@@ -44,16 +49,22 @@ inputOperators.forEach(element => {
     })
 });
 
+
+// very similar to above code / if statement, will combine later
 const equal = document.getElementById('equals');
 equal.addEventListener("click", () => {
-    screen.textContent = calculate();
+    array[0] = calculate(); 
+    screen.textContent = array[0];
+    array[1] = undefined;
+    operator = undefined;
 });
 
 const clear = document.getElementById('clear');
 clear.addEventListener("click", () => {
     array = [];
     operator = undefined;
-    screen.textContent = 'Cleared!'
+    screen.textContent = 'Cleared!';
+    operated = false;
 });
 
 const calculate = () => {
@@ -64,6 +75,7 @@ const calculate = () => {
         return array[0];
     }
     return array.reduce( (previous, current) => {
+        operated = true;
         switch (operator) {
             case 'add':
                 return previous + current;
@@ -74,7 +86,7 @@ const calculate = () => {
             case 'divide':
                 return previous / current;
             default:
-                return 'OOPS, how about we try again?';
+                return 'OOPS';
         }
     })
 }
