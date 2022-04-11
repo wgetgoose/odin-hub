@@ -59,7 +59,7 @@ numbers.forEach(element => {
     element.addEventListener("click", e => {
         // Multi-digit number entry 
         switch(true) {
-            case (screen.textContent ==  Number) && (operator == undefined):
+            case (screen.textContent == Number) && (operator == undefined):
                 screen.textContent = screen.textContent + (e.target.id);
                 array[0] = (array[0] + (e.target.id)); 
                 break;
