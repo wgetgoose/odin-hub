@@ -8,7 +8,51 @@ let operated = false; // boolean used in event listener for numbers input
 
 const screen = document.getElementById("screen");
 const currentInput = document.getElementById("current-input")
- 
+
+const reset = () => {
+    array[0] = calculate(); 
+    screen.textContent = array[0];
+    array[1] = undefined;
+    operator = undefined;
+    refreshScreen();
+}
+
+const calculate = () => {
+    if ((array[0] == undefined) && (array[1] == undefined)) {
+        return 'ERR';
+    }
+    else if ((array[0] != undefined) && (array[1] == undefined)) {
+        return array[0];
+    }
+    else if (((array[1]) == '0') && (operator == 'divide'))
+        return 'ERR';
+    return array.reduce( (previous, current) => {
+        operated = true;
+        previous = Number(previous)
+        current = Number(current)
+        switch (operator) {
+            case 'add':
+                return previous + current;
+            case 'subtract': 
+                return previous - current;
+            case 'multiply':
+                return previous * current;
+            case 'divide':
+                return previous / current;
+            default:
+                return 'OOPS';
+        }
+    })
+}
+
+function refreshScreen() {
+    string = `${array[0]} ${operator} ${array[1]}`
+    string = string.replace('add', '+');
+    string = string.replace('subtract', '-');
+    string = string.replace('multiply', '*');
+    string = string.replace('divide', '/');
+    currentInput.textContent = string.replace(/undefined/g, '')
+}
 
 const numbers = Array.from(document.getElementsByClassName("num"));
 numbers.forEach(element => {
@@ -18,7 +62,7 @@ numbers.forEach(element => {
                 screen.textContent = screen.textContent + (e.target.id);
                 array[0] = (array[0] + (e.target.id)); 
                 break;
-            case ( (operator == undefined) && (array[0] == undefined)): 
+            case (((operator == undefined) && (array[0] == undefined)) || ((array[0] == 'ERR'))): 
                 array[0] = (e.target.id);
                 break;
             case ((operator == undefined) && (array[0] != undefined)): 
@@ -57,46 +101,3 @@ clear.addEventListener("click", () => {
     screen.textContent = 'Cleared!';
     refreshScreen();
 });
-
-function reset() {
-    array[0] = calculate(); 
-    screen.textContent = array[0];
-    array[1] = undefined;
-    operator = undefined;
-    refreshScreen();
-}
-
-function refreshScreen() {
-    string = `${array[0]} ${operator} ${array[1]}`
-    string = string.replace('add', '+');
-    string = string.replace('subtract', '-');
-    string = string.replace('multiply', '*');
-    string = string.replace('divide', '/');
-    currentInput.textContent = string.replace(/undefined/g, '')
-}
-
-const calculate = () => {
-    if ((array[0] == undefined) && (array[1] == undefined)) {
-        return 'no input';
-    }
-    else if ((array[0] != undefined) && (array[1] == undefined)) {
-        return array[0];
-    }
-    return array.reduce( (previous, current) => {
-        operated = true;
-        previous = Number(previous)
-        current = Number(current)
-        switch (operator) {
-            case 'add':
-                return previous + current;
-            case 'subtract': 
-                return previous - current;
-            case 'multiply':
-                return previous * current;
-            case 'divide':
-                return previous / current;
-            default:
-                return 'OOPS';
-        }
-    })
-}
