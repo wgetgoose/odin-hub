@@ -9,6 +9,15 @@ let operated = false; // boolean used in event listener for numbers input
 const screen = document.getElementById("screen");
 const currentInput = document.getElementById("current-input")
 
+function refreshScreen() {
+    string = `${array[0]} ${operator} ${array[1]}`
+    string = string.replace('add', '+');
+    string = string.replace('subtract', '-');
+    string = string.replace('multiply', '*');
+    string = string.replace('divide', '/');
+    currentInput.textContent = string.replace(/undefined/g, '')
+}
+
 const reset = () => {
     array[0] = calculate(); 
     screen.textContent = array[0];
@@ -18,14 +27,14 @@ const reset = () => {
 }
 
 const calculate = () => {
-    if ((array[0] == undefined) && (array[1] == undefined)) {
-        return 'ERR';
+    switch(array[0]) {
+        case (undefined && (array[1] == undefined)):
+            return 'ERR';
+        case (!undefined && (array[1] == undefined)):
+            return array[0];
+        case ('0' && (operator == 'divide')):
+            return 'ERR';
     }
-    else if ((array[0] != undefined) && (array[1] == undefined)) {
-        return array[0];
-    }
-    else if (((array[1]) == '0') && (operator == 'divide'))
-        return 'ERR';
     return array.reduce( (previous, current) => {
         operated = true;
         previous = Number(previous)
@@ -43,15 +52,6 @@ const calculate = () => {
                 return 'OOPS';
         }
     })
-}
-
-function refreshScreen() {
-    string = `${array[0]} ${operator} ${array[1]}`
-    string = string.replace('add', '+');
-    string = string.replace('subtract', '-');
-    string = string.replace('multiply', '*');
-    string = string.replace('divide', '/');
-    currentInput.textContent = string.replace(/undefined/g, '')
 }
 
 const numbers = Array.from(document.getElementsByClassName("num"));
