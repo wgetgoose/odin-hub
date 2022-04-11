@@ -40,24 +40,14 @@ const inputOperators = Array.from(document.getElementsByClassName("calc"));
 inputOperators.forEach(element => {
     element.addEventListener("click", e => {
         if (array[1] != undefined) { // make sure to reset for chain calculations
-            array[0] = calculate(); 
-            screen.textContent = array[0];
-            array[1] = undefined;
-            operator = undefined;
+            reset();
         }
         operator = (e.target.id); // define operator for calculate() function
     })
 });
 
-
-// very similar to above code / if statement, will combine later
 const equal = document.getElementById('equals');
-equal.addEventListener("click", () => {
-    array[0] = calculate(); 
-    screen.textContent = array[0];
-    array[1] = undefined;
-    operator = undefined;
-});
+equal.addEventListener("click", reset);
 
 const clear = document.getElementById('clear');
 clear.addEventListener("click", () => {
@@ -66,6 +56,13 @@ clear.addEventListener("click", () => {
     screen.textContent = 'Cleared!';
     operated = false;
 });
+
+function reset() {
+    array[0] = calculate(); 
+    screen.textContent = array[0];
+    array[1] = undefined;
+    operator = undefined;
+}
 
 const calculate = () => {
     if ((array[0] == undefined) && (array[1] == undefined)) {
