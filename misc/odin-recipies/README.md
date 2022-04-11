@@ -1,0 +1,1 @@
+Odin Project Recipies, the first project in the Foundations course
