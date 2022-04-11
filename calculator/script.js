@@ -1,6 +1,6 @@
 /*
     ***** TO-DOs ******
-    1. Support multi-digit numbers
+    1. Fix adding numbers into array[1] post-execute
     2. Text Content to show current inputs by user
 */
 
@@ -8,9 +8,10 @@ let array = [] // store numbers
 let operator; 
 
 const screen = document.getElementById("screen");
+const currentInput = document.getElementById("current-input")
+currentInput.textContent = `${array[0]} ${operator} ${array[1]}`
 
 const numbers = Array.from(document.getElementsByClassName("num"));
-
 numbers.forEach(element => {
     element.addEventListener("click", e => {
         switch(true) {
@@ -18,7 +19,7 @@ numbers.forEach(element => {
                 array[0] = Number(e.target.id);
                 break;
             case ((operator == undefined) && (array[0] != undefined)): 
-                array[0] = Number(array[0].toString() + (e.target.id)); // // this is awful
+                array[0] = Number(array[0].toString() + (e.target.id)); // this is awful
                 break;
             case (array[1] == undefined): 
                 array[1] = Number(e.target.id);
@@ -35,6 +36,7 @@ inputOperators.forEach(element => {
     element.addEventListener("click", e => {
         if (array[1] != undefined) { // make sure to reset for chain calculations
             array[0] = calculate(); 
+            screen.textContent = array[0];
             array[1] = undefined;
             operator = undefined;
         }
@@ -42,9 +44,6 @@ inputOperators.forEach(element => {
     })
 });
 
-
-// NOTE: I could just implement these with an if statement in the "calc" event listener section
-// Which one is faster????
 const equal = document.getElementById('equals');
 equal.addEventListener("click", () => {
     screen.textContent = calculate();
@@ -56,8 +55,6 @@ clear.addEventListener("click", () => {
     operator = undefined;
     screen.textContent = 'Cleared!'
 });
-
-
 
 const calculate = () => {
     if ((array[0] == undefined) && (array[1] == undefined)) {
