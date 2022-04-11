@@ -10,7 +10,7 @@ let operated = false;
 
 const screen = document.getElementById("screen");
 const currentInput = document.getElementById("current-input")
-currentInput.textContent = `${array[0]} ${operator} ${array[1]}`
+ 
 
 const numbers = Array.from(document.getElementsByClassName("num"));
 numbers.forEach(element => {
@@ -18,7 +18,7 @@ numbers.forEach(element => {
         switch(true) {
             case (operated == true) && (operator == undefined):
                 screen.textContent = screen.textContent + (e.target.id);
-                array[0] = Number(array[0].toString() + (e.target.id));
+                array[0] = Number(array[0].toString() + (e.target.id)); // this is awful
                 break;
             case ( (operator == undefined) && (array[0] == undefined)): 
                 array[0] = Number(e.target.id);
@@ -33,6 +33,7 @@ numbers.forEach(element => {
                 array[1] = Number(array[1].toString() + (e.target.id)); // this is awful
                 break;
         }
+        refreshScreen();
     })
 })
 
@@ -43,6 +44,7 @@ inputOperators.forEach(element => {
             reset();
         }
         operator = (e.target.id); // define operator for calculate() function
+        refreshScreen();
     })
 });
 
@@ -53,8 +55,9 @@ const clear = document.getElementById('clear');
 clear.addEventListener("click", () => {
     array = [];
     operator = undefined;
-    screen.textContent = 'Cleared!';
     operated = false;
+    screen.textContent = 'Cleared!';
+    refreshScreen();
 });
 
 function reset() {
@@ -62,6 +65,12 @@ function reset() {
     screen.textContent = array[0];
     array[1] = undefined;
     operator = undefined;
+    refreshScreen();
+}
+
+function refreshScreen() {
+    string = `${array[0]} ${operator} ${array[1]}`
+    currentInput.textContent = string.replace(/undefined/g, '')
 }
 
 const calculate = () => {
