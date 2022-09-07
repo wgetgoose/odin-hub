@@ -49,6 +49,14 @@ table {
 	border-spacing: 0;
 }
 
+/* End of Meyer Reset */
+
+
+@font-face {
+    font-family: 'Open Sans', 'Courier New', Courier, monospace;
+    src: url('/home/carson/coding/odin-hub/projects/admin-dash/index.html');
+}
+
 .sidebar {
     grid-column: 1 / 2;
     grid-row: 1 / 7;
@@ -72,7 +80,7 @@ table {
 }
 
 .main {
-    grid-row: 2 / 7;
+    grid-row: 2;
     grid-column: 2 / 4;
 }
 
@@ -84,7 +92,7 @@ table {
 }
 
 .box {
-    height: 10em;
+    /* height: 10em; */
     background-color: white;
     border-radius: 10px;
     box-shadow: 5px 5px grey;
